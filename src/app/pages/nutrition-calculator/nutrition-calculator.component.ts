@@ -42,10 +42,12 @@ export class NutritionCalculatorComponent {
     let totalPowderPerDay: number = 0;
     let totalPowderBoxPerPeriod: number = 0;
 
-    this.feedingBottles.forEach((feedingBottle: FeedingBottle) => {
+    this.feedingBottles.forEach((feedingBottle: FeedingBottle): void => {
       if (feedingBottle.quantity && feedingBottle.volume) {
         if (this.asBleed && this.bleed) {
-          feedingBottle.volume += this.bleed;
+          const newVolume: number = feedingBottle.volume + this.bleed;
+          totalFeedingVolume += feedingBottle.quantity * newVolume;
+          return;
         }
 
         totalFeedingVolume += feedingBottle.quantity * feedingBottle.volume;
