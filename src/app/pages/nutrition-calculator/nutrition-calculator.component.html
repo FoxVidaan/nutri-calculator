@@ -1,0 +1,152 @@
+<div id="nutrition-calculator">
+  <div class="feeding-bottle">
+    <label for="feeding-bottle">
+      Combien de biberons sont consommées par jour ?
+    </label>
+    <div
+      class="multi-line"
+      *ngFor="
+        let &quot;feeding-bottle&quot; of feedingBottles;
+        let index = index
+      "
+    >
+      <div class="input">
+        <label for="feeding-bottle-ml">Volume des biberons</label>
+        <input
+          type="number"
+          name="feeding-bottle-ml"
+          id="feeding-bottle-ml"
+          placeholder="Volume des biberons (en ml)"
+          [(ngModel)]="feedingBottles[index].volume"
+          required
+        />
+        <span class="unit">ml</span>
+      </div>
+      <label for="feeding-bottle-qty">Nombre de biberon</label>
+      <div class="input">
+        <input
+          type="number"
+          name="feeding-bottle-qty"
+          id="feeding-bottle-qty"
+          placeholder="Nombre de biberons"
+          [(ngModel)]="feedingBottles[index].quantity"
+          required
+        />
+        <span class="unit"></span>
+      </div>
+      <input
+        type="button"
+        name="feeding-bottle-new-line"
+        value="Ajouter une ligne"
+        *ngIf="index == feedingBottles.length - 1"
+        (click)="addFeedingBottle()"
+      /><input
+        type="button"
+        name="feeding-bottle-new-line"
+        value="Supprimer la ligne"
+        *ngIf="feedingBottles.length > 1"
+        (click)="removeFeedingBottle(index)"
+      />
+    </div>
+  </div>
+  <div class="is-modulen">
+    <label for="is-modulen">Le produit est du modulen ?</label>
+    <div class="input">
+      <input
+        type="checkbox"
+        name="is-modulen"
+        id="is-modulen"
+        [(ngModel)]="isModulen"
+        required
+      />
+    </div>
+  </div>
+  <div class="as-bleed">
+    <label for="as-bleed">Faut-il une purge ?</label>
+    <div class="input">
+      <input
+        type="checkbox"
+        name="as-bleed"
+        id="as-bleed"
+        [(ngModel)]="asBleed"
+        required
+      />
+    </div>
+  </div>
+  <div class="bleed" *ngIf="asBleed">
+    <label for="bleed">Quantité de la purge ?</label>
+    <div class="input">
+      <input
+        type="number"
+        name="bleed"
+        id="bleed"
+        [(ngModel)]="bleed"
+        required
+      />
+    </div>
+  </div>
+  <div class="powder-per-box">
+    <label for="powder-per-box">Gramme de poudre par boite</label>
+    <div class="input">
+      <input
+        type="number"
+        name="powder-per-box"
+        id="powder-per-box"
+        [(ngModel)]="powderPerBox"
+        required
+      />
+      <span class="unit">g</span>
+    </div>
+  </div>
+  <div class="powder-per-dose">
+    <label for="powder-per-dose">Quantité de poudre par dose</label>
+    <div class="input">
+      <input
+        type="number"
+        name="powder-per-dose"
+        id="powder-per-dose"
+        [(ngModel)]="powderPerDose"
+        required
+      />
+      <span class="unit">g</span>
+    </div>
+  </div>
+  <div class="water-per-dose">
+    <label for="water-per-dose">Quantité d'eau par dose</label>
+    <div class="input">
+      <input
+        type="number"
+        name="water-per-dose"
+        id="water-per-dose"
+        [(ngModel)]="waterPerDose"
+        required
+      />
+      <span class="unit">ml</span>
+    </div>
+  </div>
+  <div class="nutrition-days">
+    <label for="nutrition-days">Nombre de jours de nutrition ?</label>
+    <div class="input">
+      <input
+        type="number"
+        name="nutrition-days"
+        id="nutrition-days"
+        [(ngModel)]="nutritionDays"
+        required
+      />
+      <span class="unit">jours</span>
+    </div>
+  </div>
+  <div class="submit">
+    <input type="submit" value="Calculer" (click)="showResult()" />
+  </div>
+  <div class="result" *ngIf="result">
+    <p>Nutrition par jour : {{ result.totalFeedingVolume }}ml</p>
+    <p>Dose par jour : {{ result.totalDosePerDay }}g</p>
+    <p>Poudre par jour : {{ result.totalPowderPerDay }}g</p>
+    <p>
+      Nombre de boite pour {{ nutritionDays }} :
+      {{ result.totalPowderBoxPerPeriod }}
+    </p>
+  </div>
+</div>
